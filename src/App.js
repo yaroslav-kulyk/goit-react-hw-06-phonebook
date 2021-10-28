@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import ContactForm from './components/ContactForm/ContactForm';
+import Counter from './components/Counter/Counter';
 import Filter from './components/Filter/Filter';
 import ContactList from './components/ContactList/ContactList';
 import s from './App.module.css';
@@ -52,6 +53,9 @@ export default function App() {
     <div className={s.container}>
       <h1>Phonebook</h1>
       <ContactForm onFormSubmit={addContact} />
+
+      <h2>Counter</h2>
+      <Counter />
 
       <h2>Contacts</h2>
       <Filter value={filter} onChange={changeFilter} />
