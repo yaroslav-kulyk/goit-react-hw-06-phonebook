@@ -5,7 +5,7 @@ import Filter from './components/Filter/Filter';
 import ContactList from './components/ContactList/ContactList';
 import s from './App.module.css';
 
-const shortid = require('shortid');
+// const shortid = require('shortid');
 
 export default function App() {
   const [contacts, setContacts] = useState(
@@ -13,28 +13,28 @@ export default function App() {
   );
   const [filter, setFilter] = useState('');
 
-  useEffect(() => {
-    window.localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  // useEffect(() => {
+  //   window.localStorage.setItem('contacts', JSON.stringify(contacts));
+  // }, [contacts]);
 
-  const addContact = ({ name, number }) => {
-    if (
-      contacts.find(
-        contact => contact.name.toLowerCase() === name.toLowerCase(),
-      )
-    ) {
-      alert(`${name} already in contacts`);
-      return;
-    }
+  // const addContact = ({ name, number }) => {
+  //   if (
+  //     contacts.find(
+  //       contact => contact.name.toLowerCase() === name.toLowerCase(),
+  //     )
+  //   ) {
+  //     alert(`${name} already in contacts`);
+  //     return;
+  //   }
 
-    const newContact = {
-      id: shortid.generate(),
-      name,
-      number,
-    };
+  //   const newContact = {
+  //     id: shortid.generate(),
+  //     name,
+  //     number,
+  //   };
 
-    setContacts(state => [...state, newContact]);
-  };
+  //   setContacts(state => [...state, newContact]);
+  // };
 
   const deleteContact = contactId => {
     setContacts(state => state.filter(contact => contact.id !== contactId));
@@ -52,7 +52,7 @@ export default function App() {
   return (
     <div className={s.container}>
       <h1>Phonebook</h1>
-      <ContactForm onFormSubmit={addContact} />
+      <ContactForm />
 
       <h2>Counter</h2>
       <Counter />

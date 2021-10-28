@@ -14,4 +14,9 @@ const addContact = ({ name, number }) => {
   };
 };
 
-export default addContact;
+const deleteContact = contactId => ({
+  type: actionTypes.DELETE,
+  payload: contactId,
+});
+
+export { addContact, deleteContact };

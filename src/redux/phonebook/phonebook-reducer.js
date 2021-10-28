@@ -14,6 +14,9 @@ const items = (state = [], { type, payload }) => {
     case actionTypes.ADD:
       return [...state, payload];
 
+    case actionTypes.DELETE:
+      return state.filter(contact => contact.id !== payload);
+
     default:
       return state;
   }
