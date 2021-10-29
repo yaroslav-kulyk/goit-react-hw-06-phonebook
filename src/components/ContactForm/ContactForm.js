@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { addContact } from '../../redux/phonebook/phonebook-actions';
-import PropTypes from 'prop-types';
+import PropTypes, { arrayOf } from 'prop-types';
 import s from './ContactForm.module.css';
 
-function ContactForm({ onFormSubmit }) {
+function ContactForm({ contacts, onFormSubmit }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -28,9 +28,19 @@ function ContactForm({ onFormSubmit }) {
   const handleSubmit = event => {
     event.preventDefault();
 
+    if (checkIfContactExists()) {
+      return alert(`${name} already in contacts`);
+    }
+
     onFormSubmit({ name, number });
 
     reset();
+  };
+
+  const checkIfContactExists = () => {
+    return contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase(),
+    );
   };
 
   const reset = () => {
@@ -73,12 +83,21 @@ function ContactForm({ onFormSubmit }) {
   );
 }
 
+const mapStateToProps = state => ({
+  contacts: state.contacts.items,
+});
+
 const mapDispatchToProps = dispatch => ({
   onFormSubmit: contact => dispatch(addContact(contact)),
 });
 
 ContactForm.propTypes = {
   onFormSubmit: PropTypes.func.isRequired,
+  contacts: arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  ),
 };
 
-export default connect(null, mapDispatchToProps)(ContactForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

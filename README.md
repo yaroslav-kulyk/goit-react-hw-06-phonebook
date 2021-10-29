@@ -1,1 +1,1 @@
-# Homework 4 - Phonebook (Hooks)
+# Homework 6 - Phonebook (Redux)
