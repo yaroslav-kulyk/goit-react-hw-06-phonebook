@@ -1,13 +1,13 @@
-import { createStore, combineReducers } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './counter/counter-reducer';
 import phonebookReducer from './phonebook/phonebook-reducer';
 
-const rootReducer = combineReducers({
-  counter: counterReducer,
-  contacts: phonebookReducer,
+const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+    contacts: phonebookReducer,
+  },
+  devTools: process.env.NODE_ENV === 'development',
 });
-
-const store = createStore(rootReducer, composeWithDevTools());
 
 export default store;
