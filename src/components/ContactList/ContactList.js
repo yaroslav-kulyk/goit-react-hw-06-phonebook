@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { deleteContact } from '../../redux/phonebook/phonebook-actions';
 import PropTypes, { arrayOf } from 'prop-types';
 import s from './ContactList.module.css';
-import actionTypes from '../../redux/phonebook/phonebook-types';
 
 const ContactList = ({ contacts, onContactDelete }) => {
   return (
@@ -23,16 +22,22 @@ const ContactList = ({ contacts, onContactDelete }) => {
   );
 };
 
-// const mapStateToProps = state => {
-//   return {
-//     contacts: state.contacts.items
-//   };
-// };
+const mapStateToProps = state => {
+  const { items, filter } = state.contacts;
 
-// const mapDispatchToProps = dispatch => ({
-//   onContactDelete: id => dispatch(deleteContact(id))
-//   onDecrement: value => dispatch(actions.decrement(value)),
-// });
+  const normalizedFilter = filter.toLowerCase();
+  const visibleContacts = items.filter(contact =>
+    contact.name.toLowerCase().includes(normalizedFilter),
+  );
+
+  return {
+    contacts: visibleContacts,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  onContactDelete: id => dispatch(deleteContact(id)),
+});
 
 ContactList.propTypes = {
   contacts: arrayOf(
@@ -43,4 +48,4 @@ ContactList.propTypes = {
   onContactDelete: PropTypes.func,
 };
 
-export default connect()(ContactList);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
